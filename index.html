@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Türkiye 2026: A Macroeconomic Snapshot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --red: #E30A17;
+    --bg: #0a0a0a;
+    --card: #151515;
+    --border: #262626;
+    --text: #f5f5f5;
+    --muted: #a0a0a0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 15% 10%, rgba(227,10,23,0.18), transparent 60%),
+      radial-gradient(ellipse 500px 500px at 85% 30%, rgba(227,10,23,0.10), transparent 70%),
+      radial-gradient(ellipse 700px 500px at 50% 100%, rgba(227,10,23,0.08), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  nav, header, section, footer { position: relative; z-index: 1; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-brand {
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .nav-brand:hover { opacity: 0.8; }
+  .nav-brand span { color: var(--red); }
+  .nav-links {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active {
+    color: var(--red);
+    position: relative;
+  }
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+
+  /* Scroll progress bar */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(90deg, var(--red), #ff5560);
+    z-index: 200;
+    transition: width 0.05s linear;
+    box-shadow: 0 0 10px var(--red);
+  }
+
+  /* Scroll-to-top button */
+  .to-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 90;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 8px 24px rgba(227,10,23,0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.25s ease;
+    pointer-events: none;
+  }
+  .to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .to-top:hover { transform: translateY(-3px) scale(1.05); }
+
+  /* HERO */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 24px 100px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-flag {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 920px;
+    height: 920px;
+    pointer-events: none;
+    opacity: 0.10;
+    z-index: 0;
+  }
+  .hero-flag svg { width: 100%; height: 100%; }
+  .hero > *:not(.hero-flag) { position: relative; z-index: 1; }
+  @media (max-width: 900px) {
+    .hero-flag { width: 560px; height: 560px; right: -80px; opacity: 0.07; }
+  }
+  .flag-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .flag-line {
+    width: 60px;
+    height: 4px;
+    background: var(--red);
+  }
+  .flag-tag {
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+  .hero h1 .accent { color: var(--red); }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 640px;
+    margin-bottom: 48px;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .hero-meta div span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .hero-meta div strong {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid rgba(227,10,23,0.3);
+    border-radius: 100px;
+    background: rgba(227,10,23,0.06);
+  }
+  .section-num::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red);
+  }
+  section h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    line-height: 1.1;
+    background: linear-gradient(180deg, #ffffff 0%, #b8b8b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  section p {
+    font-size: 16px;
+    color: #d4d4d4;
+    margin-bottom: 18px;
+    max-width: 780px;
+  }
+  section p strong { color: var(--text); font-weight: 600; }
+
+  /* CARDS / TOC */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .toc-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .toc-grid { grid-template-columns: 1fr; }
+  }
+  .toc-card {
+    background: linear-gradient(145deg, #181818 0%, #121212 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .toc-card::after {
+    content: '→';
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.25s ease;
+    font-size: 16px;
+  }
+  .toc-card:hover {
+    border-color: var(--red);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -10px rgba(227,10,23,0.35);
+  }
+  .toc-card:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--red);
+  }
+  .toc-card .num {
+    font-size: 11px;
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+  .toc-card .ttl {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* CHART */
+  .chart-wrap {
+    background: linear-gradient(145deg, #161616 0%, #101010 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin: 32px 0 12px;
+    position: relative;
+    box-shadow: 0 12px 40px -20px rgba(0,0,0,0.6);
+  }
+  .chart-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(227,10,23,0.4), transparent);
+    border-radius: 14px 14px 0 0;
+  }
+  .chart-canvas {
+    position: relative;
+    height: 340px;
+    width: 100%;
+  }
+  .chart-caption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* STAT TILES */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .stat {
+    background: linear-gradient(145deg, #181818 0%, #111 100%);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: transform 0.2s;
+  }
+  .stat:hover { transform: translateY(-2px); }
+  .stat .val {
+    background: linear-gradient(180deg, #fff 0%, #c8c8c8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat .lbl {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .stat .val {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* THREATS INFOGRAPHIC */
+  .threats {
+    margin-top: 32px;
+    display: grid;
+    gap: 16px;
+  }
+  .threat {
+    background: linear-gradient(145deg, #181818 0%, #111 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .threat::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+    opacity: 0.6;
+  }
+  .threat:hover {
+    border-color: rgba(227,10,23,0.4);
+    transform: translateX(4px);
+  }
+  .threat .rank {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ff3b46, var(--red));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: 0 0 20px rgba(227,10,23,0.4);
+  }
+  .threat .body h4 {
+    font-size: 17px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .threat .body p {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .threat .severity {
+    text-align: right;
+  }
+  .threat .severity .dots {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    justify-content: flex-end;
+  }
+  .threat .severity .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+  }
+  .threat .severity .dot.on { background: var(--red); }
+  .threat .severity span {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* RECOMMENDATIONS */
+  .recs {
+    display: grid;
+    gap: 18px;
+    margin-top: 28px;
+  }
+  .rec {
+    background: linear-gradient(145deg, #181818 0%, #111 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 30px;
+    position: relative;
+    transition: all 0.25s ease;
+  }
+  .rec:hover {
+    border-color: rgba(227,10,23,0.35);
+    transform: translateY(-2px);
+  }
+  .rec::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 24px;
+    width: 60px;
+    height: 2px;
+    background: var(--red);
+  }
+  .rec .tag {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .rec h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .rec p { margin-bottom: 0; font-size: 15px; color: #c8c8c8; }
+
+  /* SOURCES */
+  ol.sources {
+    list-style: none;
+    counter-reset: src;
+    margin-top: 24px;
+  }
+  ol.sources li {
+    counter-increment: src;
+    padding: 14px 0 14px 44px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    font-size: 14px;
+    color: #c8c8c8;
+    line-height: 1.55;
+  }
+  ol.sources li::before {
+    content: counter(src, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 14px;
+    color: var(--red);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  ol.sources li a {
+    color: var(--muted);
+    word-break: break-all;
+    border-bottom: 1px dotted var(--border);
+  }
+  ol.sources li a:hover { color: var(--text); }
+
+  footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  footer .flag-mini {
+    display: inline-block;
+    width: 32px;
+    height: 3px;
+    background: var(--red);
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 60px 20px 50px; }
+    section { padding: 50px 20px; }
+    .threat { grid-template-columns: 44px 1fr; }
+    .threat .severity { grid-column: 1 / -1; text-align: left; }
+    .threat .severity .dots { justify-content: flex-start; }
+    .nav-inner { padding: 12px 16px; }
+    .nav-brand { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="scroll-progress" id="scrollProgress"></div>
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand" id="nav-brand">TÜRKİYE <span>2026</span></a>
+    <div class="nav-links">
+      <a href="#intro">Intro</a>
+      <a href="#cycle">Cycle</a>
+      <a href="#gdp">GDP</a>
+      <a href="#prices">Prices</a>
+      <a href="#labor">Labor</a>
+      <a href="#trade">Trade</a>
+      <a href="#threats">Threats</a>
+      <a href="#fiscal">Fiscal</a>
+      <a href="#monetary">Monetary</a>
+      <a href="#fiscal-rec">Fiscal Recs</a>
+      <a href="#monetary-rec">Monetary Recs</a>
+      <a href="#conclusion">Conclusion</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-flag" aria-hidden="true">
+    <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="flagGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#E30A17" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="#E30A17" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="150" cy="150" r="150" fill="url(#flagGlow)"/>
+      <g transform="translate(150,150)">
+        <circle cx="-15" cy="0" r="82" fill="#E30A17"/>
+        <circle cx="0" cy="0" r="66" fill="#0a0a0a"/>
+        <polygon fill="#E30A17" transform="translate(70,0) rotate(-90)" points="
+          0,-26 6.1,-8.4 24.7,-8.0 9.9,3.2 15.3,21.0 0,10.6 -15.3,21.0 -9.9,3.2 -24.7,-8.0 -6.1,-8.4"/>
+      </g>
+    </svg>
+  </div>
+  <div class="flag-bar">
+    <div class="flag-line"></div>
+    <div class="flag-tag">ECON 202 Project</div>
+  </div>
+  <h1>Türkiye <span class="accent">2026</span>:<br>A Macroeconomic Snapshot.</h1>
+  <div class="hero-meta" style="margin-top: 96px;">
+    <div><span>Author</span><strong>Fatih Aydın</strong></div>
+    <div><span>Course</span><strong>ECON 202</strong></div>
+    <div><span>Instructor</span><strong>Professor Macomber</strong></div>
+    <div><span>Submitted</span><strong>April 2026</strong></div>
+  </div>
+</header>
+
+<!-- TOC -->
+<section id="toc">
+  <div class="section-num">01 // Contents</div>
+  <h2>Table of Contents</h2>
+  <p>Click any card to jump to that section.</p>
+  <div class="toc-grid">
+    <a class="toc-card" href="#intro"><div class="num">02</div><div class="ttl">Introduction</div></a>
+    <a class="toc-card" href="#cycle"><div class="num">03</div><div class="ttl">Business Cycle</div></a>
+    <a class="toc-card" href="#gdp"><div class="num">04</div><div class="ttl">GDP &amp; Growth</div></a>
+    <a class="toc-card" href="#prices"><div class="num">05</div><div class="ttl">Price Level</div></a>
+    <a class="toc-card" href="#labor"><div class="num">06</div><div class="ttl">Labor Markets</div></a>
+    <a class="toc-card" href="#trade"><div class="num">07</div><div class="ttl">International Trade</div></a>
+    <a class="toc-card" href="#threats"><div class="num">08</div><div class="ttl">Economic Threats</div></a>
+    <a class="toc-card" href="#fiscal"><div class="num">09</div><div class="ttl">Fiscal Policy</div></a>
+    <a class="toc-card" href="#monetary"><div class="num">10</div><div class="ttl">Monetary Policy</div></a>
+    <a class="toc-card" href="#fiscal-rec"><div class="num">11</div><div class="ttl">Fiscal Recs</div></a>
+    <a class="toc-card" href="#monetary-rec"><div class="num">12</div><div class="ttl">Monetary Recs</div></a>
+    <a class="toc-card" href="#conclusion"><div class="num">13</div><div class="ttl">Conclusion</div></a>
+  </div>
+</section>
+
+<!-- INTRODUCTION -->
+<section id="intro">
+  <div class="section-num">02 // Introduction</div>
+  <h2>Where is Türkiye, really?</h2>
+  <p>I picked Türkiye because it is the country I am from and because no other major emerging market has gone through what it has gone through in the last four years. Inflation above 75%, a currency cut roughly in half, a full pivot in monetary policy, and now a slow disinflation that nobody is fully sure will hold.</p>
+  <p>This project asks three things. Where is Türkiye in its business cycle right now? Is the orthodox monetary policy under TCMB Governor Karahan actually working? And what are the biggest risks to disinflation between now and the next election cycle? I am writing in April 2026 with the most recent data I could get, and I tried to use sources that disagree with each other so the picture is honest, not flattering.</p>
+</section>
+
+<!-- BUSINESS CYCLE -->
+<section id="cycle">
+  <div class="section-num">03 // Business Cycle</div>
+  <h2>Soft landing in progress.</h2>
+  <p>Türkiye is in a soft-landing phase. Growth is slowing but still positive, inflation is falling but still high, monetary policy is tight, and the government is doing modest fiscal consolidation. That is a very different picture from 2021 to 2023, when the economy was running hot on negative real interest rates, FX-protected deposits, and a credit boom that pushed inflation past 75% YoY.</p>
+  <p>The clearest signal is the quarterly growth path. After the overheating of 2021 and the stimulus-fueled 2022, q/q growth flattened and even went slightly negative in mid-2024 before turning back up. By Q4 2025 the q/q rate was 0.4%, which is exactly the kind of modest expansion you want to see while the central bank is still trying to drag inflation down.</p>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="ch-cycle"></canvas></div>
+  </div>
+  <div class="chart-caption">Source: TÜİK quarterly national accounts, BBVA Research Türkiye Outlook, March 2026.</div>
+</section>
+
+<!-- GDP -->
+<section id="gdp">
+  <div class="section-num">04 // GDP &amp; Growth</div>
+  <h2>Growth is back, but the mix is wrong.</h2>
+  <p>Real GDP grew <strong>3.6% in 2025</strong>, according to BBVA Research. Q4 2025 q/q was 0.4%, and the World Bank projects 3.7% in 2026 and 4.4% in 2027. GDP per capita is around <strong>$19,018</strong> in 2026 according to the IMF, which puts Türkiye solidly in the upper-middle income group.</p>
+  <p>The problem is composition. Growth is still mostly domestic-demand heavy. Consumption and construction are doing the work. Net exports are a drag, partly because the lira appreciated in real terms during the disinflation period and partly because external demand from Europe is weak. The whole point of the rebalancing program was to shift the mix toward exports and investment, and that part has not really happened yet.</p>
+  <div class="stat-row">
+    <div class="stat"><div class="lbl">Real GDP 2025</div><div class="val">+3.6%</div></div>
+    <div class="stat"><div class="lbl">Q4 2025 q/q</div><div class="val">+0.4%</div></div>
+    <div class="stat"><div class="lbl">2026 Forecast</div><div class="val">+3.7%</div></div>
+    <div class="stat"><div class="lbl">GDP / Capita</div><div class="val">$19,018</div></div>
+  </div>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="ch-gdp"></canvas></div>
+  </div>
+  <div class="chart-caption">Source: TÜİK, World Bank Türkiye Overview, IMF WEO October 2025. 2025 preliminary, 2026 forecast.</div>
+</section>
+
+<!-- PRICES -->
+<section id="prices">
+  <div class="section-num">05 // Price Level</div>
+  <h2>Disinflation is real. It is also slow and bumpy.</h2>
+  <p>This is the headline story of the Turkish economy. CPI peaked above <strong>75% YoY in May 2024</strong>, then fell hard through the rest of 2024 and most of 2025. The latest official print from TÜİK is <strong>30.87% YoY in March 2026</strong>, down from 31.53% in February. Core inflation came in at 29.68%.</p>
+  <p>That is real progress. It is also worth saying out loud that the independent ENAG group reports <strong>54.62%</strong> for the same month, and that gap has become its own story about data trust. Even taking the official series at face value, housing inflation is still around 42% and education is above 50%, so the disinflation is unevenly distributed across the basket.</p>
+  <p>The path from here is not a straight line. February actually ticked up before March came back down, and that kind of noise is going to keep happening as long as services inflation stays sticky and the lira is sensitive to geopolitics.</p>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="ch-cpi"></canvas></div>
+  </div>
+  <div class="chart-caption">Source: TÜİK monthly CPI release, March 2026. Dashed line is the TCMB 5% medium-term target.</div>
+</section>
+
+<!-- LABOR -->
+<section id="labor">
+  <div class="section-num">06 // Labor Markets</div>
+  <h2>The cooling shows up here first.</h2>
+  <p>Unemployment was <strong>8.5% in February 2026</strong>, up from a record low of 7.7% in December 2025. That uptick is what a soft landing looks like, not a recession yet. Tight monetary policy is supposed to cool labor markets, and a small move from 7.7 to 8.5 is closer to mission accomplished than to alarm.</p>
+  <p>The structural numbers are the bigger problem. Youth unemployment is <strong>15.8%</strong>, female unemployment is <strong>11.6%</strong> versus male at 6.9%, and labor force participation is only <strong>52.6%</strong>, which is low by OECD standards. Disinflation will not fix any of that. Those are education, childcare, and labor regulation problems that need their own policy track.</p>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="ch-unemp"></canvas></div>
+  </div>
+  <div class="chart-caption">Source: TÜİK Labour Force Statistics, monthly release through February 2026.</div>
+</section>
+
+<!-- TRADE -->
+<section id="trade">
+  <div class="section-num">07 // International Trade</div>
+  <h2>The deficit is widening again.</h2>
+  <p>The trade deficit widened to <strong>$11.3B in March 2026</strong> per the Trade Ministry, and the Q1 2026 deficit was <strong>$28.7B</strong> against $22.5B in Q1 2025. Top export destinations are Germany, the US, Italy, the UK, and France. Top import sources are China, Germany, Russia, Switzerland, and the US.</p>
+  <p>The current account deficit hit $7.5B in February 2026, the largest monthly print since April 2025. Tourism receipts and services trade keep the headline current account manageable, but the underlying goods deficit is the part that scares analysts. Real lira appreciation during the disinflation period is making Turkish exports less price-competitive, which shows up directly in this widening gap.</p>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="ch-trade"></canvas></div>
+  </div>
+  <div class="chart-caption">Source: Türkiye Trade Ministry monthly trade balance, January 2024 to March 2026.</div>
+</section>
+
+<!-- THREATS -->
+<section id="threats">
+  <div class="section-num">08 // Economic Threats</div>
+  <h2>What could still break the story.</h2>
+  <p>Three risks, in the order I rank them. The point of this section is not to be alarmist, it is to flag what would actually move the disinflation path off course.</p>
+  <div class="threats">
+    <div class="threat">
+      <div class="rank">1</div>
+      <div class="body">
+        <h4>Inflation re-acceleration from energy shocks</h4>
+        <p>BBVA Research flags higher energy prices and reserve depletion as the top external risks. Türkiye imports roughly all of its oil and gas. Any sustained Middle East tension that pushes Brent above $95 would feed straight into headline CPI within two months and unwind a chunk of the 2024 to 2025 disinflation.</p>
+      </div>
+      <div class="severity">
+        <span>Severity</span>
+        <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div>
+      </div>
+    </div>
+    <div class="threat">
+      <div class="rank">2</div>
+      <div class="body">
+        <h4>Political pressure on the central bank</h4>
+        <p>The orthodox stance under Governor Karahan is institutionally fragile. There is precedent for governor turnover and rate cuts that markets did not expect. Any reversal here would crash the lira and erase the credibility that is doing most of the disinflation work right now.</p>
+      </div>
+      <div class="severity">
+        <span>Severity</span>
+        <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div>
+      </div>
+    </div>
+    <div class="threat">
+      <div class="rank">3</div>
+      <div class="body">
+        <h4>External vulnerability</h4>
+        <p>FX reserves are still thin once you net out swap lines and gold. The current account deficit is widening. Gross external debt is high. None of this is fatal alone, but it leaves Türkiye dependent on portfolio inflows that can stop suddenly if global risk appetite turns.</p>
+      </div>
+      <div class="severity">
+        <span>Severity</span>
+        <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FISCAL -->
+<section id="fiscal">
+  <div class="section-num">09 // Fiscal Policy</div>
+  <h2>Mildly contractionary, but the headline is misleading.</h2>
+  <p>Government debt to GDP was <strong>23.8%</strong> at the end of December 2025 according to Treasury data via CEIC. That number sounds fantastic. By rich-country standards it basically is. The headline hides earthquake reconstruction spending, rising interest costs that are expected to consume <strong>15 to 20%</strong> of the 2026 budget, and a steady stream of off-budget items that do not show up in the debt ratio.</p>
+  <p>The 2026 budget targets a deficit around <strong>3.4% of GDP</strong>, but January 2026 already showed a 246B TL deficit on its own. The good news came in February, when the primary balance flipped to a 208.1B TL surplus versus a 170.4B TL deficit a year earlier. So the fiscal stance is consolidating, just slowly and with a lot of month-to-month volatility.</p>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="ch-fiscal"></canvas></div>
+  </div>
+  <div class="chart-caption">Source: Türkiye Ministry of Treasury and Finance, OECD fiscal database, IMF Article IV. 2026 forecast.</div>
+</section>
+
+<!-- MONETARY -->
+<section id="monetary">
+  <div class="section-num">10 // Monetary Policy</div>
+  <h2>TCMB held at 37%.</h2>
+  <p>TCMB held the policy rate at <strong>37%</strong> at the April 2026 meeting, after cutting from a 50% peak through five consecutive meetings. Overnight lending is at 40%, overnight borrowing at 35.5%. The bank reiterated that tight policy will continue until the 5% medium-term inflation target is achieved.</p>
+  <p>The bank also intervened to defend the lira in March 2026 after geopolitical tensions pushed the currency lower. That tells you the framework is working through three channels at once. The demand channel cools consumption and credit. The exchange rate channel imports lower prices through a stable lira. The expectations channel anchors wage and price-setting behavior, which matters most in a country where households are still scarred by the 2022 to 2024 inflation spike.</p>
+  <p>The hold at 37% rather than another cut was the right call. Cutting into a February CPI re-acceleration would have undone a lot of credibility for not much real-rate relief.</p>
+  <div class="chart-wrap">
+    <div class="chart-canvas"><canvas id="ch-rate"></canvas></div>
+  </div>
+  <div class="chart-caption">Source: TCMB monetary policy decisions, January 2023 through April 2026.</div>
+</section>
+
+<!-- FISCAL RECOMMENDATIONS -->
+<section id="fiscal-rec">
+  <div class="section-num">11 // Fiscal Recommendations</div>
+  <h2>What I would do on the fiscal side.</h2>
+  <p>These are my recommendations as a student, not policy advice. Each is meant to support the disinflation program rather than fight it.</p>
+  <div class="recs">
+    <div class="rec">
+      <div class="tag">Recommendation 01</div>
+      <h4>Lock in the primary surplus.</h4>
+      <p>February 2026 already showed a 208.1B TL primary surplus. The path should be a binding rule that pushes the primary balance toward 1% of GDP by 2027. Without that anchor, every electoral cycle becomes a fight over spending and the bond market prices in a risk premium that the 23.8% debt ratio does not deserve.</p>
+    </div>
+    <div class="rec">
+      <div class="tag">Recommendation 02</div>
+      <h4>Phase out FX-protected deposits faster.</h4>
+      <p>The KKM scheme made sense as a crisis tool in 2021. In 2026, with rates at 37% and the lira relatively stable, it is just a contingent liability that grows whenever the currency weakens. Treasury should publish a clear glide path to zero KKM stock by end-2026 and let the central bank take over FX risk management through normal reserves.</p>
+    </div>
+    <div class="rec">
+      <div class="tag">Recommendation 03</div>
+      <h4>Broaden the tax base, not just the rate.</h4>
+      <p>Türkiye leans heavily on indirect taxes like VAT and excise. Those are regressive and they show up in headline CPI, which makes the central bank's job harder. The right move is to expand direct taxation, especially property and capital gains, while lowering or stabilizing VAT on essentials. That is better disinflation policy and better distributional policy at the same time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MONETARY RECOMMENDATIONS -->
+<section id="monetary-rec">
+  <div class="section-num">12 // Monetary Recommendations</div>
+  <h2>What I would do on the monetary side.</h2>
+  <p>The April hold was right. The harder question is what the next six months look like.</p>
+  <div class="recs">
+    <div class="rec">
+      <div class="tag">Recommendation 01</div>
+      <h4>Do not cut again until CPI is below 25% for two months.</h4>
+      <p>March 2026 came in at 30.87%. Cutting before that number has a clear sub-25% reading would invite the same expectations un-anchoring that 2021 produced. Two consecutive months below 25% is a simple, communicable rule that keeps the bank disciplined without locking it into a date.</p>
+    </div>
+    <div class="rec">
+      <div class="tag">Recommendation 02</div>
+      <h4>Keep the real ex-ante policy rate at 5 to 7%.</h4>
+      <p>With core inflation at 29.68% and the policy rate at 37%, the real ex-ante rate is in roughly the right zone if you use 12-month-ahead inflation expectations near 22 to 25%. The bank should not let that real rate fall below 5% during the rest of 2026, even if pressure for cuts intensifies.</p>
+    </div>
+    <div class="rec">
+      <div class="tag">Recommendation 03</div>
+      <h4>Build FX reserves while the lira is calm.</h4>
+      <p>March 2026 intervention to support the lira shows reserves are the binding constraint, not the rate. The bank should be a steady net buyer of USD whenever portfolio inflows are positive, even at the cost of a slightly weaker lira. Reserves bought today are insurance against the energy shock or political shock that risks the disinflation story.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="section-num">13 // Conclusion</div>
+  <h2>So, is it working?</h2>
+  <p>Mostly yes. The orthodox policy turn dragged headline inflation from above 75% to roughly 31% in less than two years. Growth slowed but did not collapse, unemployment ticked up only slightly, and the primary balance is improving. By the standards of an emerging market that was inflating at 75%, this is a real success and it is fair to say Governor Karahan and the Treasury have earned the credibility they currently have.</p>
+  <p>The questions I cannot answer are political. Will TCMB independence hold through the 2027 election cycle, especially if growth slows further? Will the disinflation curve stay smooth, or will an energy shock or a lira event break it? And what happens to the KKM stock if the lira weakens 15% in a single quarter? I do not think anyone has clean answers to those.</p>
+  <p>If I extended this project, I would dig into household balance sheets, since the wealth effects of the 2022 to 2024 inflation are still showing up in consumption patterns, and into the regional breakdown of unemployment, since the headline 8.5% hides huge variance between Istanbul-Ankara-Izmir and the southeast. Both feel like the next layer of this story.</p>
+</section>
+
+<!-- SOURCES -->
+<section id="sources">
+  <div class="section-num">14 // Sources</div>
+  <h2>Sources.</h2>
+  <p>All data accessed April 2026. Where two sources disagreed, I noted the disagreement in the relevant section rather than picking one and hiding the other.</p>
+  <ol class="sources">
+    <li>Türkiye İstatistik Kurumu (TÜİK). (2026). Consumer Price Index, March 2026 release. <a href="https://data.tuik.gov.tr/Bulten/Index?p=Tuketici-Fiyat-Endeksi" target="_blank" rel="noopener">data.tuik.gov.tr</a></li>
+    <li>Türkiye İstatistik Kurumu (TÜİK). (2026). Labour Force Statistics, February 2026. <a href="https://data.tuik.gov.tr/Kategori/GetKategori?p=istihdam-issizlik-ve-ucret-108" target="_blank" rel="noopener">data.tuik.gov.tr</a></li>
+    <li>Central Bank of the Republic of Türkiye (TCMB). (2026). Monetary Policy Committee Decisions and Interest Rates. <a href="https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Monetary+Policy" target="_blank" rel="noopener">tcmb.gov.tr</a></li>
+    <li>World Bank. (2026). Türkiye Country Overview. <a href="https://www.worldbank.org/en/country/turkey/overview" target="_blank" rel="noopener">worldbank.org</a></li>
+    <li>International Monetary Fund. (2025). World Economic Outlook, October 2025. <a href="https://www.imf.org/en/Publications/WEO" target="_blank" rel="noopener">imf.org</a></li>
+    <li>BBVA Research. (2026). Türkiye Economic Outlook, March 2026. <a href="https://www.bbvaresearch.com/en/publicaciones/turkiye/" target="_blank" rel="noopener">bbvaresearch.com</a></li>
+    <li>Trading Economics. (2026). Turkey Economic Indicators. <a href="https://tradingeconomics.com/turkey/indicators" target="_blank" rel="noopener">tradingeconomics.com</a></li>
+    <li>P.A. Turkey. (2026). Macroeconomic and Financial Analysis. <a href="https://www.paturkey.com/" target="_blank" rel="noopener">paturkey.com</a></li>
+    <li>ENAG (Inflation Research Group). (2026). E-CPI March 2026 Release. <a href="https://enagrup.org/" target="_blank" rel="noopener">enagrup.org</a></li>
+    <li>FocusEconomics. (2026). Turkey Economic Forecast. <a href="https://www.focus-economics.com/countries/turkey/" target="_blank" rel="noopener">focus-economics.com</a></li>
+    <li>CEIC Data. (2026). Turkey Government Debt and Fiscal Statistics. <a href="https://www.ceicdata.com/en/country/turkey" target="_blank" rel="noopener">ceicdata.com</a></li>
+    <li>OECD. (2025). Economic Outlook for Türkiye. <a href="https://www.oecd.org/economy/turkey-economic-snapshot/" target="_blank" rel="noopener">oecd.org</a></li>
+    <li>Reuters. (2026). Turkey markets and central bank coverage. <a href="https://www.reuters.com/world/middle-east/turkey/" target="_blank" rel="noopener">reuters.com</a></li>
+    <li>Bloomberg. (2026). Türkiye macro and rates coverage. <a href="https://www.bloomberg.com/quote/TURKEY:IND" target="_blank" rel="noopener">bloomberg.com</a></li>
+    <li>Türkiye Ministry of Trade. (2026). Foreign Trade Statistics, March 2026. <a href="https://www.ticaret.gov.tr/data/" target="_blank" rel="noopener">ticaret.gov.tr</a></li>
+  </ol>
+</section>
+
+<footer>
+  <span class="flag-mini"></span>
+  Fatih Aydın · ECON 202 · April 2026
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+  // Scroll progress bar + scroll-to-top + active link
+  const progress = document.getElementById('scrollProgress');
+  const toTop = document.getElementById('toTop');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sectionIds = Array.from(navLinks).map(a => a.getAttribute('href')).filter(h => h && h.startsWith('#'));
+
+  function onScroll() {
+    const h = document.documentElement;
+    const scrollTop = h.scrollTop || document.body.scrollTop;
+    const scrollHeight = h.scrollHeight - h.clientHeight;
+    const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    progress.style.width = pct + '%';
+
+    if (scrollTop > 400) toTop.classList.add('visible');
+    else toTop.classList.remove('visible');
+
+    // active link
+    const navH = document.querySelector('nav').offsetHeight + 40;
+    let activeId = null;
+    for (const id of sectionIds) {
+      const el = document.querySelector(id);
+      if (!el) continue;
+      const top = el.getBoundingClientRect().top;
+      if (top - navH <= 0) activeId = id;
+    }
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === activeId));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Smooth scroll for all in-page anchor links (works inside iframes / preview panes)
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || href === '#') return;
+      e.preventDefault();
+      if (href === '#top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const target = document.querySelector(href);
+      if (target) {
+        const navHeight = document.querySelector('nav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Chart.js global defaults
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.color = '#a0a0a0';
+  Chart.defaults.borderColor = '#262626';
+
+  const RED = '#E30A17';
+  const WHITE = '#f5f5f5';
+  const GRID = '#262626';
+
+  const baseOpts = (extra = {}) => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: {
+        labels: { color: '#d4d4d4', font: { size: 12, weight: '500' }, usePointStyle: true, padding: 16 }
+      },
+      tooltip: {
+        backgroundColor: '#0a0a0a',
+        borderColor: RED,
+        borderWidth: 1,
+        titleColor: '#fff',
+        bodyColor: '#d4d4d4',
+        padding: 12,
+        cornerRadius: 6
+      }
+    },
+    scales: {
+      x: { grid: { color: GRID, drawBorder: false }, ticks: { color: '#a0a0a0', maxRotation: 0, autoSkip: true, maxTicksLimit: 12 } },
+      y: { grid: { color: GRID, drawBorder: false }, ticks: { color: '#a0a0a0' } }
+    },
+    ...extra
+  });
+
+  // 1. Quarterly GDP cycle
+  new Chart(document.getElementById('ch-cycle'), {
+    type: 'bar',
+    data: {
+      labels: ['21Q1','21Q2','21Q3','21Q4','22Q1','22Q2','22Q3','22Q4','23Q1','23Q2','23Q3','23Q4','24Q1','24Q2','24Q3','24Q4','25Q1','25Q2','25Q3','25Q4'],
+      datasets: [{
+        label: 'Quarterly Real GDP Growth (q/q, %)',
+        data: [2.6, 1.8, 2.7, 1.6, 1.0, 2.0, 0.5, 0.6, 0.5, 1.5, 0.5, 1.4, 1.4, -0.2, -0.2, 1.7, 1.0, 1.1, 0.7, 0.4],
+        backgroundColor: ctx => ctx.parsed.y < 0 ? '#666' : RED,
+        borderRadius: 4
+      }]
+    },
+    options: baseOpts({ scales: { x: { grid: { color: GRID } }, y: { grid: { color: GRID }, ticks: { callback: v => v + '%' } } } })
+  });
+
+  // 2. Annual GDP
+  new Chart(document.getElementById('ch-gdp'), {
+    type: 'bar',
+    data: {
+      labels: ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025*','2026F'],
+      datasets: [{
+        label: 'Real GDP Growth (annual %)',
+        data: [6.1, 3.3, 7.5, 3.0, 0.8, 1.9, 11.4, 5.5, 5.1, 3.2, 3.6, 3.7],
+        backgroundColor: RED,
+        borderRadius: 4
+      }]
+    },
+    options: baseOpts({ scales: { x: { grid: { color: GRID } }, y: { grid: { color: GRID }, ticks: { callback: v => v + '%' } } } })
+  });
+
+  // 3. CPI monthly
+  const cpiLabels = [];
+  const cpiYears = { 2022: 12, 2023: 12, 2024: 12, 2025: 12, 2026: 3 };
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for (const y in cpiYears) {
+    for (let m = 0; m < cpiYears[y]; m++) cpiLabels.push(months[m] + " '" + String(y).slice(2));
+  }
+  const cpiData = [
+    // 2022
+    48.69, 54.44, 61.14, 69.97, 73.50, 73.20, 72.10, 70.21, 73.45, 75.00, 74.39, 64.27,
+    // 2023
+    57.68, 55.18, 50.51, 43.68, 39.59, 38.21, 47.83, 58.94, 61.53, 61.36, 61.98, 64.77,
+    // 2024
+    64.86, 67.07, 68.50, 69.80, 75.45, 71.60, 61.78, 51.97, 49.38, 48.58, 47.09, 44.38,
+    // 2025
+    42.12, 39.05, 38.10, 37.86, 35.41, 35.05, 33.52, 32.95, 33.29, 32.87, 31.07, 30.89,
+    // 2026
+    30.65, 31.53, 30.87
+  ];
+  new Chart(document.getElementById('ch-cpi'), {
+    type: 'line',
+    data: {
+      labels: cpiLabels,
+      datasets: [
+        {
+          label: 'CPI YoY (%)',
+          data: cpiData,
+          borderColor: RED,
+          backgroundColor: 'rgba(227, 10, 23, 0.12)',
+          tension: 0.3,
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          borderWidth: 2.5
+        },
+        {
+          label: 'TCMB Target (5%)',
+          data: cpiData.map(() => 5),
+          borderColor: WHITE,
+          borderDash: [6, 6],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false
+        }
+      ]
+    },
+    options: baseOpts({ scales: { x: { grid: { color: GRID }, ticks: { maxTicksLimit: 10 } }, y: { grid: { color: GRID }, ticks: { callback: v => v + '%' } } } })
+  });
+
+  // 4. Unemployment
+  const unempLabels = [];
+  const unempYears = { 2022: 12, 2023: 12, 2024: 12, 2025: 12, 2026: 2 };
+  for (const y in unempYears) {
+    for (let m = 0; m < unempYears[y]; m++) unempLabels.push(months[m] + " '" + String(y).slice(2));
+  }
+  const unempData = [
+    11.4, 11.4, 10.8, 10.6, 10.9, 10.3, 10.5, 10.1, 10.1, 10.2, 10.2, 10.3,
+    10.0, 10.0, 10.1, 10.2, 9.6, 9.6, 9.4, 9.2, 9.1, 8.5, 8.7, 9.0,
+    8.7, 8.7, 8.6, 8.5, 8.4, 9.2, 8.8, 8.6, 8.7, 8.8, 8.6, 8.5,
+    8.4, 8.6, 8.7, 8.6, 8.4, 8.5, 8.5, 8.6, 8.5, 8.5, 8.5, 7.7,
+    8.2, 8.5
+  ];
+  new Chart(document.getElementById('ch-unemp'), {
+    type: 'line',
+    data: {
+      labels: unempLabels,
+      datasets: [{
+        label: 'Unemployment Rate (%)',
+        data: unempData,
+        borderColor: RED,
+        backgroundColor: 'rgba(227, 10, 23, 0.10)',
+        tension: 0.35,
+        fill: true,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        borderWidth: 2.5
+      }]
+    },
+    options: baseOpts({ scales: { x: { grid: { color: GRID }, ticks: { maxTicksLimit: 10 } }, y: { grid: { color: GRID }, ticks: { callback: v => v + '%' } } } })
+  });
+
+  // 5. Trade balance
+  const tradeLabels = [];
+  const tradeYears = { 2024: 12, 2025: 12, 2026: 3 };
+  for (const y in tradeYears) {
+    for (let m = 0; m < tradeYears[y]; m++) tradeLabels.push(months[m] + " '" + String(y).slice(2));
+  }
+  const tradeData = [
+    6.7, 7.2, 7.3, 5.6, 6.3, 3.7, 7.1, 5.0, 5.6, 6.5, 7.7, 8.0,
+    8.1, 8.0, 7.4, 8.5, 8.0, 7.4, 10.5, 7.5, 7.7, 7.0, 8.4, 10.7,
+    7.8, 9.6, 11.3
+  ];
+  new Chart(document.getElementById('ch-trade'), {
+    type: 'bar',
+    data: {
+      labels: tradeLabels,
+      datasets: [{
+        label: 'Monthly Trade Deficit (USD billions)',
+        data: tradeData,
+        backgroundColor: RED,
+        borderRadius: 3
+      }]
+    },
+    options: baseOpts({
+      plugins: {
+        legend: { labels: { color: '#d4d4d4', usePointStyle: true, padding: 16 } },
+        tooltip: {
+          backgroundColor: '#0a0a0a', borderColor: RED, borderWidth: 1,
+          titleColor: '#fff', bodyColor: '#d4d4d4', padding: 12, cornerRadius: 6,
+          callbacks: { label: (ctx) => '  Deficit: $' + ctx.parsed.y.toFixed(1) + 'B' }
+        }
+      },
+      scales: { x: { grid: { color: GRID }, ticks: { maxTicksLimit: 12 } }, y: { grid: { color: GRID }, ticks: { callback: v => '$' + v + 'B' } } }
+    })
+  });
+
+  // 6. Budget deficit
+  new Chart(document.getElementById('ch-fiscal'), {
+    type: 'bar',
+    data: {
+      labels: ['2019','2020','2021','2022','2023','2024','2025','2026F'],
+      datasets: [{
+        label: 'Budget Deficit (% of GDP)',
+        data: [2.9, 3.4, 2.7, 0.9, 5.2, 4.9, 3.1, 3.4],
+        backgroundColor: RED,
+        borderRadius: 4
+      }]
+    },
+    options: baseOpts({
+      plugins: {
+        legend: { labels: { color: '#d4d4d4', usePointStyle: true, padding: 16 } },
+        tooltip: {
+          backgroundColor: '#0a0a0a', borderColor: RED, borderWidth: 1,
+          titleColor: '#fff', bodyColor: '#d4d4d4', padding: 12, cornerRadius: 6,
+          callbacks: { label: (ctx) => '  Deficit: ' + ctx.parsed.y.toFixed(1) + '% of GDP' }
+        }
+      },
+      scales: { x: { grid: { color: GRID } }, y: { grid: { color: GRID }, ticks: { callback: v => v + '%' } } }
+    })
+  });
+
+  // 7. Policy rate
+  new Chart(document.getElementById('ch-rate'), {
+    type: 'line',
+    data: {
+      labels: ['Jan 23','Jul 23','Aug 23','Nov 23','Jan 24','Mar 24','Dec 24','Mar 25','Jul 25','Jan 26','Mar 26','Apr 26'],
+      datasets: [{
+        label: 'TCMB One-Week Repo Rate (%)',
+        data: [9.0, 17.5, 25.0, 40.0, 45.0, 50.0, 47.5, 42.5, 40.0, 38.0, 37.0, 37.0],
+        borderColor: RED,
+        backgroundColor: 'rgba(227, 10, 23, 0.14)',
+        tension: 0.25,
+        fill: true,
+        pointRadius: 5,
+        pointBackgroundColor: WHITE,
+        pointBorderColor: RED,
+        pointBorderWidth: 2,
+        borderWidth: 2.5
+      }]
+    },
+    options: baseOpts({
+      plugins: {
+        legend: { labels: { color: '#d4d4d4', usePointStyle: true, padding: 16 } },
+        tooltip: {
+          backgroundColor: '#0a0a0a',
+          borderColor: RED,
+          borderWidth: 1,
+          titleColor: '#fff',
+          bodyColor: '#d4d4d4',
+          padding: 12,
+          cornerRadius: 6,
+          callbacks: {
+            afterLabel: (ctx) => {
+              const notes = {
+                'Jul 23': 'Şimşek/Erkan pivot begins',
+                'Mar 24': '50% peak rate',
+                'Dec 24': 'First cut of cycle',
+                'Apr 26': 'Hold under Karahan'
+              };
+              return notes[ctx.label] || '';
+            }
+          }
+        }
+      },
+      scales: { x: { grid: { color: GRID } }, y: { grid: { color: GRID }, ticks: { callback: v => v + '%' }, suggestedMin: 5 } }
+    })
+  });
+</script>
+
+</body>
+</html>
